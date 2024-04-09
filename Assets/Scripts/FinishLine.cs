@@ -17,6 +17,7 @@ public class FinishLine : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
+            other.GetComponent<Enemy>().move = false;
             place++;
         }
     }

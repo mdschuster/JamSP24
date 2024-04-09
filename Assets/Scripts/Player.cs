@@ -29,9 +29,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        dirToMouse = mousePos - this.transform.position;
-        dirToMouse.Normalize();
         if (finalPlace != -1)
         {
             move = false;

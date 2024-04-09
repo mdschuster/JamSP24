@@ -7,9 +7,10 @@ public class Enemy : MonoBehaviour
 {
     public List<Transform> checkPointList;
 
-    private int cpIndex;
+    public int cpIndex;
     private Rigidbody2D rb;
     private BoatMovement bm;
+    public float rotation = 0;
 
     public bool move = true;
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
         rb=GetComponent<Rigidbody2D>();
         bm = GetComponent<BoatMovement>();
         cpIndex = 0;
+        rotation = 0;
     }
 
     // Update is called once per frame
@@ -28,10 +30,18 @@ public class Enemy : MonoBehaviour
             return;
         }
         //point to next checkpoint
+        Vector3 dir = checkPointList[cpIndex].position-this.transform.position;
+        if (dir.magnitude < 2f) cpIndex++;
+        
+        if (cpIndex > checkPointList.Count) cpIndex = 0;
+        Debug.DrawLine(this.transform.position,checkPointList[cpIndex].position,Color.red,0.05f);
+        dir.Normalize();
+        rotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
     }
 
     private void FixedUpdate()
     {
+        transform.rotation = bm.getRotation(rotation);
         if (move)
         {
             Vector2 movement = bm.getMovement();
