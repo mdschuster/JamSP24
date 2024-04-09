@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private BoatMovement bm;
     public float rotation = 0;
-
+    private bool change = true;
+    private Vector3 pos;
     public bool move = true;
     // Start is called before the first frame update
     void Start()
@@ -30,11 +32,17 @@ public class Enemy : MonoBehaviour
             return;
         }
         //point to next checkpoint
-        Vector3 dir = checkPointList[cpIndex].position-this.transform.position;
-        if (dir.magnitude < 2f) cpIndex++;
+        if (change)
+        {
+            Transform[] objs = checkPointList[cpIndex].GetComponentsInChildren<Transform>();
+            pos = objs[UnityEngine.Random.Range(0, objs.Length)].position;
+            change = false;
+        }
+
+        Vector3 dir = pos - this.transform.position;
         
         if (cpIndex > checkPointList.Count) cpIndex = 0;
-        Debug.DrawLine(this.transform.position,checkPointList[cpIndex].position,Color.red,0.05f);
+        Debug.DrawLine(this.transform.position,pos,Color.red,0.05f);
         dir.Normalize();
         rotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
     }
@@ -59,5 +67,11 @@ public class Enemy : MonoBehaviour
             rb.AddForce(-rb.velocity,ForceMode2D.Force);
             if (rb.velocity.magnitude < 0.1f) rb.velocity = Vector3.zero;
         }
+    }
+
+    public void updateCP()
+    {
+        cpIndex++;
+        change = true;
     }
 }
