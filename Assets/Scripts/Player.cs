@@ -37,7 +37,6 @@ public class Player : MonoBehaviour
             return;
         }
         //get current rotation
-        print(rotation);
         if (Input.GetKey(KeyCode.A))
         {
             rotation += 3;
