@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class CPBoxTele : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform[] teleLocation;
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Enemy"))
+        {
+            other.gameObject.transform.position = teleLocation[Random.Range(0,teleLocation.Length)].position;
+        }
     }
 }
