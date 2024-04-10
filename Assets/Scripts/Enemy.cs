@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
     {
         rb=GetComponent<Rigidbody2D>();
         bm = GetComponent<BoatMovement>();
-        cpIndex = 0;
         rotation = 0;
     }
 
@@ -34,6 +33,7 @@ public class Enemy : MonoBehaviour
         //point to next checkpoint
         if (change)
         {
+            if (cpIndex > checkPointList.Count-1) cpIndex = 0;
             Transform[] objs = checkPointList[cpIndex].GetComponentsInChildren<Transform>();
             pos = objs[UnityEngine.Random.Range(0, objs.Length)].position;
             change = false;
@@ -41,7 +41,6 @@ public class Enemy : MonoBehaviour
 
         Vector3 dir = pos - this.transform.position;
         
-        if (cpIndex > checkPointList.Count) cpIndex = 0;
         Debug.DrawLine(this.transform.position,pos,Color.red,0.05f);
         dir.Normalize();
         rotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
