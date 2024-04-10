@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void PlayButtonPress()
     {
-        
+        SceneManager.LoadScene("Game");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void QuitButtonPress()
     {
-        
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBGL
+        Application.OpenURL("about:blank");
+#elif UNITY_STANDALONE_OSX
+        Application.Quit();
+#endif
     }
 }

@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance().running) return;
         if (finalPlace != -1)
         {
             move = false;
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance().running) return;
         transform.rotation = bm.getRotation(rotation);
         if (move)
         {

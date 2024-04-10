@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance()!=null && !GameManager.instance().running) return;
         if (!move)
         {
             return;
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.instance()!=null && !GameManager.instance().running) return;
         Quaternion rot = bm.getRotation(rotation);
         rb.MoveRotation(rot);
         
