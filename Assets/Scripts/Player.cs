@@ -36,7 +36,8 @@ public class Player : MonoBehaviour
             GameManager.instance().showFinishedUI(finalPlace);
             return;
         }
-        
+        //get current rotation
+        print(rotation);
         if (Input.GetKey(KeyCode.A))
         {
             rotation += 3;
@@ -44,6 +45,8 @@ public class Player : MonoBehaviour
         {
             rotation += -3;
         }
+
+        rotation %= 360;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -61,6 +64,10 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (!GameManager.instance().running) return;
+        //managing the rotation myself instead of using the
+        //physics system causes strange flipping issue
+        //when hit by other players sometimes
+        //I would need to change to applying torque to rotate
         transform.rotation = bm.getRotation(rotation);
         if (move)
         {

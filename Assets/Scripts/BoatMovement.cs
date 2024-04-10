@@ -23,7 +23,7 @@ public class BoatMovement : MonoBehaviour
     {
         Quaternion desiredRotation = Quaternion.AngleAxis(angle+90f, Vector3.forward);
         desiredRotation.Normalize();
-        return Quaternion.Lerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+        return Quaternion.Lerp(transform.rotation.normalized, desiredRotation, rotationSpeed * Time.deltaTime);
     }
 
     public Vector2 getMovement()
