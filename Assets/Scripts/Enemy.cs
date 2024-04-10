@@ -48,7 +48,9 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.rotation = bm.getRotation(rotation);
+        Quaternion rot = bm.getRotation(rotation);
+        rb.MoveRotation(rot);
+        
         if (move)
         {
             Vector2 movement = bm.getMovement();
