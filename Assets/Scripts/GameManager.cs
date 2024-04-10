@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Application = UnityEngine.Application;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     private float time;
     public bool running;
     public TMP_Text startText;
+    public TMP_Text placeText;
+    public GameObject finishUI;
 
     private static GameManager _instance;
 
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
         time = timeBeforeStart;
         running = false;
         startText.gameObject.SetActive(true);
+        finishUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -55,5 +59,20 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         go.SetActive(false);
+    }
+
+    public void MenuButtonPress()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void showFinishedUI(int place)
+    {
+        finishUI.SetActive(true);
+        if (place == 1) placeText.text = "First";
+        if (place == 2) placeText.text = "Second";
+        if (place == 3) placeText.text = "Third";
+        if (place == 4) placeText.text = "Fourth";
+
     }
 }

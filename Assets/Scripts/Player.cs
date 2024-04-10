@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
         if (finalPlace != -1)
         {
             move = false;
+            GameManager.instance().showFinishedUI(finalPlace);
             return;
         }
         
