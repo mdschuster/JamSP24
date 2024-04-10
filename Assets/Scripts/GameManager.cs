@@ -11,12 +11,16 @@ public class GameManager : MonoBehaviour
     public float timeBeforeStart;
     private float time;
     public bool running;
+    private bool start;
     public TMP_Text startText;
     public TMP_Text placeText;
     public GameObject finishUI;
 
     private static GameManager _instance;
 
+    public GameObject countdownSound;
+    public GameObject goSound;
+    
     public static GameManager instance()
     {
         return _instance;
@@ -31,26 +35,35 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startText.text=(Mathf.Ceil(timeBeforeStart)).ToString();
         Application.targetFrameRate = 60;
         time = timeBeforeStart;
         running = false;
         startText.gameObject.SetActive(true);
         finishUI.SetActive(false);
+        start = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (time <= 0)
+        if (time <= 0 && start)
         {
             running = true;
             startText.text = "START";
             StartCoroutine(disappearObjectAfter(startText.gameObject, 2f));
+            Instantiate(goSound, this.transform.position, Quaternion.identity);
+            start = false;
         }
 
         if (time > 0)
         {
-            startText.text = Mathf.Ceil(time).ToString();
+            if ((Mathf.Ceil(time)).ToString()!=startText.text)
+            {
+                startText.text = (Mathf.Ceil(time)).ToString();
+                Instantiate(countdownSound, this.transform.position, Quaternion.identity);
+            }
+            
             time -= Time.deltaTime;
         }
     }
