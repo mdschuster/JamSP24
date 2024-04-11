@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startText.text=(Mathf.Ceil(timeBeforeStart)).ToString();
+        startText.text="";
         Application.targetFrameRate = 60;
         time = timeBeforeStart;
         running = false;
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
         if (time > 0)
         {
-            if ((Mathf.Ceil(time)).ToString()!=startText.text)
+            if (Mathf.Ceil((time))!=4 && (Mathf.Ceil(time)).ToString()!=startText.text)
             {
                 startText.text = (Mathf.Ceil(time)).ToString();
                 Instantiate(countdownSound, this.transform.position, Quaternion.identity);
